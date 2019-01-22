@@ -34,7 +34,7 @@ namespace RenewableEnergyCredits.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var request = new RestRequest("products/menu", Method.GET);
+            var request = new RestRequest("products", Method.GET);
 
             var response = await _mantleRestClient.ExecuteGetTaskAsync(request);
             

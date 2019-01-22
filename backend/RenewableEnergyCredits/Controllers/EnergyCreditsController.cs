@@ -41,6 +41,12 @@ namespace RenewableEnergyCredits.Controllers
         {
             var request = new RestRequest($"tracker/{_mantleConfig.ProductId}/assets", Method.GET);
             var response = await _mantleRestClient.ExecuteGetTaskAsync(request);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                return StatusCode((int) response.StatusCode, response.Content);
+            }
+
             var greenEnergies = JsonConvert.DeserializeObject<IEnumerable<GreenEnergy>>(response.Content);
 
             return Ok(greenEnergies);
@@ -55,10 +61,14 @@ namespace RenewableEnergyCredits.Controllers
         public async Task<IActionResult> Create([FromRoute] string greenEnergyName)
         {
             var request = new RestRequest($"tracker/{_mantleConfig.ProductId}/assets", Method.POST);
-            request.AddJsonBody(new {name = greenEnergyName});
+            request.AddJsonBody(new
+            {
+                name = greenEnergyName
+            });
+
             var response = await _mantleRestClient.ExecutePostTaskAsync(request);
 
-            if (response.StatusCode != HttpStatusCode.OK)
+            if (response.StatusCode != HttpStatusCode.Created)
             {
                 return StatusCode((int) response.StatusCode, response.Content);
             }
@@ -76,7 +86,7 @@ namespace RenewableEnergyCredits.Controllers
         [Route("balances")]
         public async Task<IActionResult> GetBalances()
         {
-            var request = new RestRequest($"tracker/{_mantleConfig.ProductId}/wallet/balances", Method.GET);
+            var request = new RestRequest($"tracker/{_mantleConfig.ProductId}/balances", Method.GET);
             var response = await _mantleRestClient.ExecuteGetTaskAsync(request);
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -115,11 +125,15 @@ namespace RenewableEnergyCredits.Controllers
         [HttpPost("issue")]
         public async Task<IActionResult> Issue([FromBody] IssueRequest request)
         {
-            var restRequest = new RestRequest($"tracker/{_mantleConfig.ProductId}/assets/issue", Method.POST);
-            restRequest.AddJsonBody(request);
+            var restRequest = new RestRequest($"tracker/{_mantleConfig.ProductId}/assets/{request.AssetId}/issue", Method.POST);
+            restRequest.AddJsonBody(new MantleIssueRequest{
+                RecipientEmail = request.RecipientEmail,
+                Amount = request.Amount
+            });
+
             var response = await _mantleRestClient.ExecutePostTaskAsync(restRequest);
 
-            if (response.StatusCode != HttpStatusCode.OK)
+            if (response.StatusCode != HttpStatusCode.NoContent)
             {
                 return StatusCode((int) response.StatusCode, response.Content);
             }

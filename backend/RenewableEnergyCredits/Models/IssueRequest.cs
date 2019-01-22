@@ -11,4 +11,9 @@ namespace RenewableEnergyCredits.Models
         public string RecipientEmail { get; set; }
         public int Amount { get; set; }
     }
+    public class MantleIssueRequest
+    {
+        public string RecipientEmail { get; set; }
+        public int Amount { get; set; }
+    }
 }
