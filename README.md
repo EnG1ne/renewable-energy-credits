@@ -2,7 +2,7 @@
 This is a template of a project using [Tracker](https://www.mantleblockchain.com/tracker) to build a simple platform where users can issue, manage and transfer credits of green energy.
 
 ## Before you start
-You might find it easier to implement this project after reading our [documentation](https://docs.mantleblockchain.com).
+You might find it easier to implement this project after reading our [documentation](https://developer.mantleblockchain.com/docs).
 
 ## Functionalities
 - [x] Create green energy assets
@@ -71,5 +71,5 @@ This is used to fetch a specific asset in Tracker. In our case, we would fetch a
 This is used to issue an amount of a specific asset in Tracker. In our case, we would issue an amount of green credits to a user.
 
 ## More docs
-- [Mantle knowledge base](https://docs.mantleblockchain.com)
-- [Mantle API documentation](https://api.mantleblockchain.com/documentation/index.html)
+- [Mantle knowledge base](https://developer.mantleblockchain.com/docs)
+- [Mantle API documentation](https://api.mantleblockchain.com/documentation)
