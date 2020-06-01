@@ -13,3 +13,4 @@ node_modules/
 *.user
 
 \.vscode/
+backend/RenewableEnergyCredits/Config/mantle-config.yaml
