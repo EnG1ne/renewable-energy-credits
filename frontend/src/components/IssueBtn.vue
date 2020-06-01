@@ -38,101 +38,103 @@
 </template>
 
 <script>
-  import * as apiService from "../services/apiService";
-  import { validationMixin } from 'vuelidate';
-  import {
-    required,
-    email,
-    minLength,
-    maxLength,
-    minValue,
-  } from 'vuelidate/lib/validators';
-  export default {
-    name: "issuebtn",
-    mixins: [validationMixin],
-    props: ['energyDisplayName', 'assetId'],
-    props: {
-      energyDisplayName: String,
-      assetId: String,
+import * as apiService from "../services/apiService";
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  email,
+  minLength,
+  maxLength,
+  minValue
+} from "vuelidate/lib/validators";
+export default {
+  name: "issuebtn",
+  mixins: [validationMixin],
+  props: ["energyDisplayName", "assetId"],
+  props: {
+    energyDisplayName: String,
+    assetId: String
+  },
+  data: () => ({
+    showDialog: false,
+    dialogValue: null,
+    form: {
+      energyId: null,
+      email: null,
+      quantity: null
     },
-    data: () => ({
-      showDialog: false,
-      dialogValue: null,
-      form: {
-        energyId: null,
-        email: null,
-        quantity: null,
-      },
-      assetCreated: false,
-      sending: false,
-      snackBarMsg: null,
-      showSnackbar: false,
-      //TODO: Implement logic to fetch the user's email
-      userEmail: 'user-email',
-    }),
-    validations: {
-      form: {
-        quantity: {
-          required,
-          minValue: minValue(1),
-        },
-      }
-    },
-    methods: {
-      getValidationClass (fieldName) {
-        const field = this.$v.form[fieldName]
-
-        if (field) {
-          return {
-            'md-invalid': field.$invalid && field.$dirty
-          }
-        }
-      },
-      clearForm () {
-        this.$v.$reset()
-        this.form.quantity = null
-        this.form.energyType = null
-      },
-      issueAmount () {
-        this.form.energyId = this.assetId;
-        this.form.email = this.userEmail;
-        this.sending = true;
-        apiService.issueGreenCredits(this.form)
-          .then(() => {            
-            this.assetCreated = true;
-            this.snackBarMsg = "Energy issued.";
-            this.showSnackbar = true;
-            this.sending = false;
-            this.clearForm();
-          }).catch((error) => {
-            if (error.response) {
-                this.snackBarMsg = error.response.data;
-            } else if (error.request) {
-                this.snackBarMsg = error.request;
-            } else {
-                this.snackBarMsg = error.message;
-            }
-            this.showSnackbar = true;
-            this.sending = false;
-            this.clearForm();
-          });
-      },
-      validateUser () {
-        this.$v.$touch()
-
-        if (!this.$v.$invalid) {
-          this.issueAmount()
-        }
+    assetCreated: false,
+    sending: false,
+    snackBarMsg: null,
+    showSnackbar: false,
+    //TODO: Implement logic to fetch the user's email
+    userEmail: " adrian@mantleblockchain.com"
+  }),
+  validations: {
+    form: {
+      quantity: {
+        required,
+        minValue: minValue(1)
       }
     }
-  };
+  },
+  methods: {
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
+
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
+    clearForm() {
+      this.$v.$reset();
+      this.form.quantity = null;
+      this.form.energyType = null;
+    },
+    issueAmount() {
+      this.form.energyId = this.assetId;
+      this.form.email = this.userEmail;
+      this.sending = true;
+      apiService
+        .issueGreenCredits(this.form)
+        .then(() => {
+          this.assetCreated = true;
+          this.snackBarMsg = "Energy issued.";
+          this.showSnackbar = true;
+          this.sending = false;
+          this.clearForm();
+        })
+        .catch(error => {
+          if (error.response) {
+            this.snackBarMsg = error.response.data;
+          } else if (error.request) {
+            this.snackBarMsg = error.request;
+          } else {
+            this.snackBarMsg = error.message;
+          }
+          this.showSnackbar = true;
+          this.sending = false;
+          this.clearForm();
+        });
+    },
+    validateUser() {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.issueAmount();
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 .create-btn-container {
-    float: right;
+  float: right;
 }
 .create-btn {
-    height: 50px;
+  height: 50px;
 }
 </style>
