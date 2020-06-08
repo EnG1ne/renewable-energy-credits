@@ -18,7 +18,7 @@ namespace RenewableEnergyCredits
         public void getBuyOrders()
         {
             Order testOrder = new Order() { Price = 20, OpenQuantity = 2, IsBuy = true };
-            Console.WriteLine("Order Price: {}, Open Quantity: {}, Order Filled: {}",
+            Console.WriteLine("Order Price: {0}, Open Quantity: {1}, Order Filled: {2}",
                 testOrder.Price, testOrder.OpenQuantity, testOrder.IsFilled);
         }
     }
