@@ -11,16 +11,21 @@ namespace RenewableEnergyCredits.Controllers
     public class OrdersController : Controller
     {
         private readonly RestClient _mantleRestClient;
+        private readonly IOrderManager _orderManagement;
 
-        public OrdersController(RestClient mantleRestClient)
+        public OrdersController(RestClient mantleRestClient, IOrderManager orderManagement)
         {
             _mantleRestClient = mantleRestClient;
+            _orderManagement = orderManagement;
         }
 
         [HttpGet("buy/book")]
         public async Task<IActionResult> GetBuyBook()
         {
             //TODO: Implement get buy order book
+
+            _orderManagement.print("HELLO");
+            _orderManagement.getBuyOrders();
             return Ok();
         }
         

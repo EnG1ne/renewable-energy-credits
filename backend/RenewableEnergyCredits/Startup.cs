@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RenewableEnergyCredits.Controllers;
 using RestSharp;
+using YamlDotNet.Core.Tokens;
 
 namespace RenewableEnergyCredits
 {
@@ -23,6 +25,9 @@ namespace RenewableEnergyCredits
             services.AddMvc();
             
             services.AddSingleton(s => Program.MantleConfig);
+
+            // Dependency Injection of OrderManager class
+            services.AddScoped<IOrderManager, OrderManager>();
 
             services.AddSingleton(mantleRestClient =>
             {

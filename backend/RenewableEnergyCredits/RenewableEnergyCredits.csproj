@@ -18,4 +18,11 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OrderMatcher">
+      <HintPath>..\..\..\order-matcher\OrderMatcher\OrderMatcher\bin\Debug\netstandard2.1\OrderMatcher.dll</HintPath>
+      <Private>true</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
 </Project>
